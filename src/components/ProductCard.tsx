@@ -1,14 +1,10 @@
 // components/ProductCard.tsx
 
-import { Product } from '../lib/api';
+
 import { FC } from 'react';
 
-interface ProductCardProps {
-  product: Product;
-  discountPercentage?: number;  // Optional discount percentage
-}
 
-const ProductCard: FC<ProductCardProps> = ({ product, discountPercentage = 40 }) => {
+const ProductCard = ({ product, discountPercentage = 40 }) => {
   const discountedPrice = (product.price - (product.price * discountPercentage) / 100).toFixed(2);
 
   return (

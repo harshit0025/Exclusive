@@ -15,35 +15,48 @@ import { SiYoutubegaming } from "react-icons/si";
 
 // import { GetStaticProps } from "next";
 // import { fetchProducts, Product } from "../lib/api";
-// import ProductCard from "../components/ProductCard";
+import ProductCard from "../components/ProductCard";
+
+
+// import Banner from '../../public/Images/Banner.jpg'
+import Headings from "@/components/Headings";
+
+
 
 // interface HomeProps {
 //   products: Product[];
 // }
 
-import Banner from '../../public/Images/Banner.jpg'
-import Headings from "@/components/Headings";
 
-// export const getStaticProps: GetStaticProps = async () => {
-//   try {
-//     const products = await fetchProducts(5);
-//     return {
-//       props: {
-//         products: products || [],
-//       },
-//       revalidate: 60,
-//     };
-//   } catch (error) {
-//     console.error("Error fetching products:", error);
-//     return {
-//       props: {
-//         products: null,
-//       },
-//     };
-//   }
-// };
 
-const Home = () => {
+const Home = async () => {
+
+  // try {
+  //   const res = await fetch('https://fakestoreapi.com/products');
+  //   if (!res.ok) {
+  //     throw new Error('Failed to fetch products');
+  //   }
+  //   const data = await res.json();
+  //   return {
+  //     props: { products: data }, // Pass the fetched data as props to the page
+  //   };
+  // } catch (error) {
+  //   console.error('Error fetching products:', error);
+  //   return {
+  //     props: { products: [] }, // In case of an error, return an empty array
+  //   };
+  // }
+
+  async function getProducts (limit: number) {
+    const response = await fetch(`https://fakestoreapi.com/products?limit=${limit}`);
+    const data = await response.json();
+    return data;
+  }
+
+  const products1 = await getProducts(4);
+  const products2 = await getProducts(4);
+  const products3 = await getProducts(8);
+
   return (
     <>
       <section className="flex justify-start items-start">
@@ -104,14 +117,15 @@ const Home = () => {
         </div>
       </section>
       <SaleWithTimer />
+      
 
-      {/* <section>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
-          {products.map((product) => (
+      <section className="flex-auto mx-20 ">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-1 px-4 py-8">
+          {products1.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
         </div>
-      </section> */}
+      </section>
       
 
         <section>
@@ -136,6 +150,14 @@ const Home = () => {
           <Headings heading1="This Month" heading2="Best Selling Products" />
           <Button text="View All" />
         </section>
+
+        <section className="flex-auto mx-20 ">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-1 px-4 py-8">
+          {products2.map((product) => (
+            <ProductCard key={product.id} product={product} />
+          ))}
+        </div>
+      </section>
         
 
         <section>
@@ -150,7 +172,14 @@ const Home = () => {
       <section className="mx-20">
         <Headings heading1="Our Products" heading2="Explore Our Products" />
         {/* API CALL   */}
-        
+      </section>
+
+      <section className="flex-auto mx-20 ">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 px-4 py-8">
+          {products3.map((product) => (
+            <ProductCard key={product.id} product={product} />
+          ))}
+        </div>
       </section>
 
       <div className="flex items-center justify-center my-10">
